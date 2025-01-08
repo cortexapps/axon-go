@@ -24,9 +24,18 @@ TARGET_REPO ?= git@github.com:cortexapps/neuron-go.git
 CURRENT_SHA ?= $(shell git rev-parse HEAD)
 
 publish: test
-	@echo "Publishing SDK to $(PUBLISH_DIR)"	
+	@echo "Publishing SDK to $(PUBLISH_DIR)"
 	@rm -rf $(PUBLISH_DIR)
 	@git clone $(TARGET_REPO) $(PUBLISH_DIR)
 	@cp -r . $(PUBLISH_DIR)
-	@cd $(PUBLISH_DIR) && git checkout -b "publish-$(CURRENT_SHA)" && git add . && git commit -m "Update SDK ($(CURRENT_SHA))" && git push
-	
+	@cd $(PUBLISH_DIR) && \
+	if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Changes detected, publishing..."; \
+		echo "$$(git status --porcelain)"; \
+		git checkout -b "publish-$(CURRENT_SHA)" && \
+		git add . && \
+		git commit -m "Update SDK ($(CURRENT_SHA))" && \
+		git push -f; \
+	else \
+		echo "No changes to publish"; \
+	fi
