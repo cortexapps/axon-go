@@ -3,7 +3,7 @@ package neuron
 import (
 	"fmt"
 
-	pb "github.com/cortexapps/neuron/.generated/proto/github.com/cortexapps/neuron"
+	pb "github.com/cortexapps/neuron-go/.generated/proto/github.com/cortexapps/neuron"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

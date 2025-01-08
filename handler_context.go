@@ -3,7 +3,7 @@ package neuron
 import (
 	"context"
 
-	pb "github.com/cortexapps/neuron/.generated/proto/github.com/cortexapps/neuron"
+	pb "github.com/cortexapps/neuron-go/.generated/proto/github.com/cortexapps/neuron"
 	"go.uber.org/zap"
 )
 
