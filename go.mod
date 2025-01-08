@@ -1,4 +1,4 @@
-module github.com/cortexapps/neuron
+module github.com/cortexapps/neuron-go
 
 go 1.22.9
 

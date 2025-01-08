@@ -13,7 +13,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	neuron "github.com/cortexapps/neuron/.generated/proto/github.com/cortexapps/neuron"
+	neuron "github.com/cortexapps/neuron-go/.generated/proto/github.com/cortexapps/neuron"
 	gomock "go.uber.org/mock/gomock"
 	grpc "google.golang.org/grpc"
 )
