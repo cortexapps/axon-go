@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
-	pb "github.com/cortexapps/axon/.generated/proto/github.com/cortexapps/axon"
-	"github.com/cortexapps/axon/mock_axon"
+	pb "github.com/cortexapps/axon-go/.generated/proto/github.com/cortexapps/axon"
+	"github.com/cortexapps/axon-go/mock_axon"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
 	"google.golang.org/grpc"

@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	pb "github.com/cortexapps/axon/.generated/proto/github.com/cortexapps/axon"
+	pb "github.com/cortexapps/axon-go/.generated/proto/github.com/cortexapps/axon"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -388,7 +388,7 @@ func (a *Agent) invokeHandler(ctx context.Context, invoke *pb.DispatchHandlerInv
 
 		loggerFromCore := zap.New(wrapped)
 
-		handlerContext := NewHandlerContext(invoke.HandlerName, ctx, apiStub, loggerFromCore)
+		handlerContext := NewHandlerContext(invoke, ctx, apiStub, loggerFromCore)
 		result, duration, err := a.executeHandlerWithRecover(handlerInfo.handler, handlerContext)
 		report.DurationMs = int32(duration.Milliseconds())
 
