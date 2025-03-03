@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/cortexapps/axon"
-	pb "github.com/cortexapps/axon/.generated/proto/github.com/cortexapps/axon"
+	"github.com/cortexapps/axon-go"
+	pb "github.com/cortexapps/axon-go/.generated/proto/github.com/cortexapps/axon"
 	"go.uber.org/zap"
 )
 
@@ -21,6 +21,12 @@ func main() {
 		axon.WithTimeout(time.Minute),
 		axon.WithInvokeOption(
 			pb.HandlerInvokeType_RUN_INTERVAL, "1s",
+		),
+	)
+
+	_, err = agentClient.RegisterHandler(myExampleWebhooklHandler,
+		axon.WithInvokeOption(
+			pb.HandlerInvokeType_WEBHOOK, "my-webhook-id",
 		),
 	)
 
@@ -74,5 +80,15 @@ func myExampleIntervalHandler(ctx axon.HandlerContext) interface{} {
 	ctx.CortexJsonApiCall("PUT", "/api/v1/catalog/custom-data", string(json))
 
 	ctx.Logger().Info("Hello from myExampleIntervalHandler!")
+	return nil
+}
+
+// Here we have our example handler that will be called every one second
+func myExampleWebhooklHandler(ctx axon.HandlerContext) interface{} {
+
+	body := ctx.Args()["body"]
+	contentType := ctx.Args()["content-type"]
+
+	ctx.Logger().Info("Hello from myExampleIntervalHandler!", zap.String("body", body), zap.String("content-type", contentType))
 	return nil
 }

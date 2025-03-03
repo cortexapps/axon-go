@@ -3,7 +3,7 @@ package axon
 import (
 	"fmt"
 
-	pb "github.com/cortexapps/axon/.generated/proto/github.com/cortexapps/axon"
+	pb "github.com/cortexapps/axon-go/.generated/proto/github.com/cortexapps/axon"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"

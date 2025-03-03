@@ -23,7 +23,7 @@ This will create a new directory `my-go-axon` with a Go project scaffolded in th
 To run your project, first start the agent Docker container like:
 
 ```
-docker run -it --rm -p "50051:50051" -e "DRYRUN=true" ghcr.io/cortexapps/axon:latest serve
+docker run -it --rm -p "50051:50051" -p "80:80" -e "DRYRUN=true" ghcr.io/cortexapps/cortex-axon-agent:latest serve
 ```
 
 This is `DRYRUN` mode that prints what it would have called, to run against the Cortex API remove the `DRYRUN` environment variable and add `-e "CORTEX_API_TOKEN=$CORTEX_API_TOKEN`.  Be sure to export your token first, e.g. `export CORTEX_API_TOKEN=your-token`.
