@@ -12,8 +12,8 @@ import (
 // grpcClient is an interface to abstract the grpc client
 // to make this system more testable
 type grpcClient interface {
-	api() pb.CortexApiClient
-	agent() pb.AxonAgentClient
+	Api() pb.CortexApiClient
+	Agent() pb.AxonAgentClient
 }
 
 type grpcClientImpl struct {
@@ -51,7 +51,7 @@ func (c *grpcClientImpl) getConnection() *grpc.ClientConn {
 	return c.conn
 }
 
-func (c *grpcClientImpl) agent() pb.AxonAgentClient {
+func (c *grpcClientImpl) Agent() pb.AxonAgentClient {
 	if c.stub == nil {
 		conn := c.getConnection()
 		if conn == nil {
@@ -62,7 +62,7 @@ func (c *grpcClientImpl) agent() pb.AxonAgentClient {
 	return c.stub
 }
 
-func (c *grpcClientImpl) api() pb.CortexApiClient {
+func (c *grpcClientImpl) Api() pb.CortexApiClient {
 	if c.apiClientStub == nil {
 		conn := c.getConnection()
 		if conn == nil {

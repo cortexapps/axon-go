@@ -28,7 +28,7 @@ import (
 type Agent struct {
 	DispatchId string
 
-	client grpcClient
+	Client grpcClient
 
 	handlers           []*handlerInfo
 	registeredHandlers map[string]*handlerInfo
@@ -61,7 +61,7 @@ func NewAxonAgent(options ...Option) *Agent {
 	}
 
 	a.logger = logger
-	a.client = newGrpcClient(ao.host, ao.port, logger)
+	a.Client = newGrpcClient(ao.host, ao.port, logger)
 	a.registeredHandlers = make(map[string]*handlerInfo)
 	return a
 }
@@ -170,7 +170,7 @@ func (a *Agent) RegisterInvocableHandler(handler InvocableHandler, invokeOptions
 
 func (a *Agent) registerHandler(info *handlerInfo) (string, error) {
 
-	stub := a.client.agent()
+	stub := a.Client.Agent()
 	if stub == nil {
 		return "", fmt.Errorf("failed to create agent connection")
 	}
@@ -192,7 +192,7 @@ func (a *Agent) registerHandler(info *handlerInfo) (string, error) {
 // UnregisterHandler unregisters a handler by id
 func (a *Agent) UnregisterHandler(id string) error {
 
-	stub := a.client.agent()
+	stub := a.Client.Agent()
 	if stub == nil {
 		return fmt.Errorf("failed to create agent connection")
 	}
@@ -260,7 +260,7 @@ func (a *Agent) Run(ctx context.Context) error {
 
 		// aquire an agent and register handlers if needed
 		// this allows agent crash/restart to recover
-		stub := a.client.agent()
+		stub := a.Client.Agent()
 		if stub == nil {
 			sleepOnError(fmt.Errorf("failed to create agent connection"))
 			continue
@@ -407,7 +407,7 @@ func (a *Agent) invokeHandler(ctx context.Context, invoke *pb.DispatchHandlerInv
 	}
 
 	go func() {
-		apiStub := a.client.api()
+		apiStub := a.Client.Api()
 
 		wrapped := zapcore.RegisterHooks(a.logger.Core(), func(entry zapcore.Entry) error {
 			report.Logs = append(report.Logs, &pb.Log{
@@ -453,7 +453,7 @@ func (a *Agent) invokeHandler(ctx context.Context, invoke *pb.DispatchHandlerInv
 			zap.Any("error", report.GetError()),
 		)
 	}
-	_, err := a.client.agent().ReportInvocation(context.Background(), report)
+	_, err := a.Client.Agent().ReportInvocation(context.Background(), report)
 	if err != nil {
 		a.logger.Error("failed to report invocation", zap.Error(err))
 	}

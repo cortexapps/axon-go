@@ -227,11 +227,11 @@ func TestInvokeHandlerApiCallWithError(t *testing.T) {
 
 func createAgent(controller *gomock.Controller) (*Agent, *mockGrpcClient) {
 	agent := NewAxonAgent(WithSleepOnError(0))
-	agent.client = &mockGrpcClient{
+	agent.Client = &mockGrpcClient{
 		apiStub:   mock_axon.NewMockCortexApiClient(controller),
 		agentStub: mock_axon.NewMockAxonAgentClient(controller),
 	}
-	return agent, agent.client.(*mockGrpcClient)
+	return agent, agent.Client.(*mockGrpcClient)
 }
 
 type agentCallback func(*mockGrpcClient)
@@ -304,11 +304,11 @@ type mockGrpcClient struct {
 	agentStub *mock_axon.MockAxonAgentClient
 }
 
-func (m *mockGrpcClient) api() pb.CortexApiClient {
+func (m *mockGrpcClient) Api() pb.CortexApiClient {
 	return m.apiStub
 }
 
-func (m *mockGrpcClient) agent() pb.AxonAgentClient {
+func (m *mockGrpcClient) Agent() pb.AxonAgentClient {
 	return m.agentStub
 }
 
